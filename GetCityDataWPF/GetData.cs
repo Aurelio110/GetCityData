@@ -1,14 +1,19 @@
 ﻿using GetCityDataWPF;
+using GTranslatorAPI;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace GetCityData
 {
     public class GetData
     {
+
         string cityName;
+
+
         public GetData(string cityName)
         {
             this.cityName = cityName;
@@ -28,15 +33,25 @@ namespace GetCityData
 
             if (response.IsSuccessful && response.Content != null)
             {
+
                 var deserializedResponse = JsonConvert.DeserializeObject<DataModel.Rootobject>(response.Content);
+
                 if (deserializedResponse?.results != null && deserializedResponse.results.Any())
                 {
+                    TranslateMethods translateMethods = new TranslateMethods();
+
                     if (deserializedResponse.results.Length > 1)
                     {
+                        int index = 0;
                         Results resultsWindow = new Results();
+
                         foreach (var result in deserializedResponse.results)
                         {
-                            resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n\n";
+                            
+                            string translationOfCountry = translateMethods.GetTranslatedCountry(deserializedResponse.results[index].country);
+                            string translationOfState = translateMethods.GetTranslatedState(deserializedResponse.results[index].admin1);
+                            index++;
+                            resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {translationOfCountry}\nBundesland: {translationOfState}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n\n";
                         }
                         resultsWindow.ShowDialog();
                         return "";
@@ -45,20 +60,16 @@ namespace GetCityData
                     {
                         foreach (var result in deserializedResponse.results)
                         {
-                            return $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n";
+                            string translationOfCountry = translateMethods.GetTranslatedCountry(deserializedResponse.results[0].country);
+                            string translationOfState = translateMethods.GetTranslatedState(deserializedResponse.results[0].admin1);
+                            
+                            return $"Name: {result.name}\nStaat: {translationOfCountry}\nBundesland: {translationOfState}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}";
                         }
                     }
                 }
-            }else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return "Die eingegebene Stadt wurde nicht gefunden!";
-            }
-            else
-            {
-                return "Fehler beim Abrufen der Daten: " + response.ErrorMessage;
-            }
+            }            
             return "Keine Ergebnisse gefunden.";
-
         }
     }
 }
+           

@@ -31,6 +31,7 @@ namespace GetCityDataWPF
         private void Button_Click_Clear(object sender, RoutedEventArgs e)
         {
             cityName.Clear();
+            cityName.IsReadOnly = false;
         }
 
         private void Button_Click_Search(object sender, RoutedEventArgs e)
@@ -39,7 +40,7 @@ namespace GetCityDataWPF
             string DataOrNull = getCityData.PromptCityData();
            
             cityName.Clear();
-            
+            cityName.IsReadOnly = true;
             cityName.Text = DataOrNull;
             
         }
