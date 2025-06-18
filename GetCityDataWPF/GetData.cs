@@ -36,7 +36,7 @@ namespace GetCityData
                         Results resultsWindow = new Results();
                         foreach (var result in deserializedResponse.results)
                         {
-                            resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\n\n";
+                            resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n\n";
                         }
                         resultsWindow.ShowDialog();
                         return "";
@@ -45,12 +45,20 @@ namespace GetCityData
                     {
                         foreach (var result in deserializedResponse.results)
                         {
-                            return $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\n";
+                            return $"\nName: {result.name}\nStaat: {result.country}\nBundesland: {result.admin1}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n";
                         }
                     }
                 }
+            }else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return "Die eingegebene Stadt wurde nicht gefunden!";
             }
-            return "";
+            else
+            {
+                return "Fehler beim Abrufen der Daten: " + response.ErrorMessage;
+            }
+            return "Keine Ergebnisse gefunden.";
+
         }
     }
 }
