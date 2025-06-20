@@ -8,7 +8,8 @@
                  Width="800"
                  Height="450"
                  WindowStartupLocation="CenterScreen"
-                 mc:Ignorable="d">
+                 mc:Ignorable="d"
+                 >
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -16,7 +17,7 @@
                 <GradientStop Color="White" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="44,350,0,0" VerticalAlignment="Top" Height="52" Width="201" Click="Button_Click_Clear" TabIndex="3"/>
+        <Button x:Name="ClearIt" Content="Clear" HorizontalAlignment="Left" Margin="44,350,0,0" VerticalAlignment="Top" Height="52" Width="201" Click="Button_Click_Clear" TabIndex="3"/>
         <Button Content="Search" HorizontalAlignment="Left" Margin="540,350,0,0" VerticalAlignment="Top" Height="52" Width="201" Click="Button_Click_Search" TabIndex="2"/>
         <Label Content="Nach welchem Ort möchten Sie suchen?" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Height="38" Width="377" FontSize="18"/>
         <TextBox x:Name="cityName" HorizontalAlignment="Center" Margin="0,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="780" TextChanged="TextBox_TextChanged" Height="196" FontSize="16" TabIndex="1" BorderThickness="1" Background="White"/>

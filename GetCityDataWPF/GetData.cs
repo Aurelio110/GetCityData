@@ -5,6 +5,7 @@ using RestSharp;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 
 namespace GetCityData
 {
@@ -42,7 +43,7 @@ namespace GetCityData
 
                     if (deserializedResponse.results.Length > 1)
                     {
-                        int index = 0;
+                        byte index = 0;                        
                         Results resultsWindow = new Results();
 
                         foreach (var result in deserializedResponse.results)
@@ -54,7 +55,8 @@ namespace GetCityData
                             resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {translationOfCountry}\nBundesland: {translationOfState}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n\n";
                         }
                         resultsWindow.ShowDialog();
-                        return "";
+                        
+                        return null;
                     }
                     else
                     {

@@ -17,7 +17,11 @@ namespace GetCityDataWPF
     /// </summary>
     public partial class MainWindow
     {
-        
+        public void GetClearButton()
+        {
+            Button_Click_Clear(null!, null!);
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,11 +29,13 @@ namespace GetCityDataWPF
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            
+            
         }
 
-        private void Button_Click_Clear(object sender, RoutedEventArgs e)
+        public void Button_Click_Clear(object sender, RoutedEventArgs e)
         {
+            
             cityName.Clear();
             cityName.IsReadOnly = false;
         }
@@ -38,10 +44,18 @@ namespace GetCityDataWPF
         {
             GetData getCityData = new GetData(cityName.Text);
             string DataOrNull = getCityData.PromptCityData();
-           
-            cityName.Clear();
-            cityName.IsReadOnly = true;
-            cityName.Text = DataOrNull;
+            if(DataOrNull == null)
+            {
+                cityName.Clear();
+                cityName.IsReadOnly = false;
+            }
+            else
+            {
+                cityName.Clear();
+                cityName.IsReadOnly = true;
+                cityName.Text = DataOrNull;
+            }
+                
             
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GetCityDataWPF
@@ -9,11 +10,11 @@ namespace GetCityDataWPF
     /// </summary>
     public partial class Results
     {
+        
         public Results()
         {
             InitializeComponent();
         }
 
-        
     }
 }
