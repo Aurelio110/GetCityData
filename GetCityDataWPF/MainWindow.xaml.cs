@@ -1,4 +1,5 @@
 ﻿using GetCityData;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,10 +41,10 @@ namespace GetCityDataWPF
             cityName.IsReadOnly = false;
         }
 
-        private void Button_Click_Search(object sender, RoutedEventArgs e)
+        private async void Button_Click_Search(object sender, RoutedEventArgs e)
         {
             GetData getCityData = new GetData(cityName.Text);
-            string DataOrNull = getCityData.PromptCityData();
+            string DataOrNull = await getCityData.PromptCityData();
             if(DataOrNull == null)
             {
                 cityName.Clear();

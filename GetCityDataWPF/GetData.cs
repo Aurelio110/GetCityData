@@ -19,18 +19,18 @@ namespace GetCityData
         {
             this.cityName = cityName;
         }
-        public string PromptCityData()
+        public async Task<string> PromptCityData()
         {
             if (string.IsNullOrWhiteSpace(cityName))
             {
-                return "Das Feld darf nicht leer sein!";
+               return "Das Feld darf nicht leer sein!";
             }
             string apiUrl = "https://geocoding-api.open-meteo.com/v1/search";
 
-            var client = new RestClient(apiUrl);
-            var request = new RestRequest();
+            RestClient client = new RestClient(apiUrl);
+            RestRequest request = new RestRequest();
             request.AddParameter("name", cityName);
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful && response.Content != null)
             {
@@ -49,8 +49,8 @@ namespace GetCityData
                         foreach (var result in deserializedResponse.results)
                         {
                             
-                            string translationOfCountry = translateMethods.GetTranslatedCountry(deserializedResponse.results[index].country);
-                            string translationOfState = translateMethods.GetTranslatedState(deserializedResponse.results[index].admin1);
+                            string translationOfCountry = await translateMethods.GetTranslatedCountry(deserializedResponse.results[index].country);
+                            string translationOfState = await translateMethods.GetTranslatedState(deserializedResponse.results[index].admin1);
                             index++;
                             resultsWindow.cityName.Text += $"\nName: {result.name}\nStaat: {translationOfCountry}\nBundesland: {translationOfState}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}\n\n";
                         }
@@ -62,15 +62,15 @@ namespace GetCityData
                     {
                         foreach (var result in deserializedResponse.results)
                         {
-                            string translationOfCountry = translateMethods.GetTranslatedCountry(deserializedResponse.results[0].country);
-                            string translationOfState = translateMethods.GetTranslatedState(deserializedResponse.results[0].admin1);
+                            string translationOfCountry = await translateMethods.GetTranslatedCountry(deserializedResponse.results[0].country);
+                            string translationOfState = await translateMethods.GetTranslatedState(deserializedResponse.results[0].admin1);
                             
                             return $"Name: {result.name}\nStaat: {translationOfCountry}\nBundesland: {translationOfState}\nLandkreis: {result.admin3}\nEinwohnerzahl: {result.population}\nHöhe: {result.elevation} Meter über NN\nLängengrad: {result.longitude}\nBreitengrad: {result.latitude}";
                         }
                     }
                 }
             }            
-            return "Keine Ergebnisse gefunden.";
+            return("Keine Ergebnisse gefunden.");
         }
     }
 }

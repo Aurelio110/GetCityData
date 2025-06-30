@@ -10,23 +10,23 @@ namespace GetCityDataWPF
 {
     public class TranslateMethods
     {
-        public string GetTranslatedCountry(string country)
+        public async Task<string> GetTranslatedCountry(string country)
         {
             GTranslatorAPIClient translatorClient = new GTranslatorAPIClient();
 
-            Translation translation = translatorClient.Translate(Languages.en, Languages.de, country);
+            Translation translation = await translatorClient.TranslateAsync(Languages.en, Languages.de, country);
 
             return translation.TranslatedText;
 
         }
-        public string GetTranslatedState(string state)
+        public async Task<string> GetTranslatedState(string state)
         {
             if (string.IsNullOrWhiteSpace(state))
             {
                 return "Unbekanntes Bundesland";
             }
             GTranslatorAPIClient translatorClient = new GTranslatorAPIClient();
-            Translation translation = translatorClient.Translate(Languages.en, Languages.de, state);
+            Translation translation = await translatorClient.TranslateAsync(Languages.en, Languages.de, state);
             return translation.TranslatedText;
         }
 
