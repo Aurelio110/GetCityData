@@ -7,6 +7,7 @@
                  Title="Get City Data"
                  Width="800"
                  Height="450"
+                 Icon="/Icons/Skyscraper.ico"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d"
                  >

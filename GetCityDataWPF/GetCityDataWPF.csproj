@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="36574536-innenstadt-panorama-gebaude-symbol-wolkenkratzer-serenade-stadt-gebaude-symbol-illustration-vektor.ico" />
+    <None Remove="Icons\Skyscraper.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icons\Skyscraper.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GTranslatorAPI" Version="1.0.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
